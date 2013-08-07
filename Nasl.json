@@ -1,59 +1,102 @@
-{ 
-    "name": "Nasl", 
-    "scopeName": "source.nasl", 
-    "fileTypes": ["nasl", "inc"], 
-    "foldingStartMarker": "(?x)\n\t\t /\\*\\*(?!\\*)\n\t\t|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))\n\t", 
-    "foldingStopMarker": "(?<!\\*)\\*\\*/|^\\s*\\}", 
+{
+    "name": "Nasl",
+    "scopeName": "source.nasl",
+    "fileTypes": ["nasl", "inc"],
+    "foldingStartMarker": "(?x)\n\t\t /\\*\\*(?!\\*)\n\t\t|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))\n\t",
+    "foldingStopMarker": "(?<!\\*)\\*\\*/|^\\s*\\}",
     "patterns": [
+
+
+
+        {
+            "match": "<\\=|>\\=|\\=\\=|<|>|\\!\\=", 
+            "name": "keyword.operator.comparison.nasl"
+        }, 
+        {
+            "match": "\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|&\\=|\\|\\=|\\^\\=|>>\\=|>>>\\=|<<\\=|\\*\\*\\=", 
+            "name": "keyword.operator.assignment.augmented.nasl"
+        }, 
+        {
+            "match": "\\+|\\-|\\*|\\*\\*|/|//|%|<<|>>|>>>|&|\\||\\^|~", 
+            "name": "keyword.operator.arithmetic.nasl"
+        }, 
+        {
+            "match": "\\=", 
+            "name": "keyword.operator.assignment.nasl"
+        }, 
+
+
+
+
+        {
+            "match": "\\b(?i:(0x\\h*))", 
+            "name": "constant.numeric.integer.hexadecimal.nasl"
+        }, 
+        
+        {
+            "match": "\\b(0[0-7]+)", 
+            "name": "constant.numeric.integer.octal.nasl"
+        }, 
+
+        {
+            "match": "\\b([1-9]+[0-9]*|0)", 
+            "name": "constant.numeric.integer.decimal.nasl"
+        },
+
         {
             "captures": {
                 "1": {
                     "name": "punctuation.definition.comment.nasl"
                 }
-            }, 
-            "match": "(#).*$\\n?", 
+            },
+            "match": "(#).*$\\n?",
             "name": "comment.line.number-sign.nasl"
         },
+
         {
-            "begin": "'", 
+            "begin": "'",
             "beginCaptures": {
                 "0": {
                     "name": "punctuation.definition.string.begin.nasl"
                 }
-            }, 
-            "end": "'", 
+            },
+            "end": "'",
             "endCaptures": {
                 "0": {
                     "name": "punctuation.definition.string.end.nasl"
                 }
-            }, 
-            "name": "string.quoted.single.js", 
+            },
+            "name": "string.quoted.single.js",
             "patterns": [
                 {
-                    "match": "\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)", 
-                    "name": "constant.character.escape.js"
+                    "include": "#escaped_char"
                 }
             ]
         },
+
         {
-            "begin": "\"", 
+            "begin": "\"",
             "beginCaptures": {
                 "0": {
                     "name": "punctuation.definition.string.begin.nasl"
                 }
-            }, 
-            "end": "\"", 
+            },
+            "end": "\"",
             "endCaptures": {
                 "0": {
                     "name": "punctuation.definition.string.end.nasl"
                 }
-            }, 
+            },
             "name": "string.quoted.double.nasl"
         },
+
         {
-            "match": "\\b(local_var|global_var)\\b", 
+            "match": "\\b(local_var|global_var)\\b",
             "name": "storage.modifier.nasl"
         },
+
+
+
         {
             "begin": "^\\s*(function)\\s+(?=[A-Za-z_][A-Za-z0-9_]*\\s*\\()", 
             "beginCaptures": {
@@ -61,9 +104,30 @@
                     "name": "storage.type.function.nasl"
                 }
             }, 
-            "end": "(\\))", 
+            "end": "(\\))\\s*(?:(.*$\\n?))", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.parameters.end.nasl"
+                }, 
+                "2": {
+                    "name": "punctuation.section.function.begin.nasl"
+                }, 
+                "3": {
+                    "name": "invalid.illegal.missing-section-begin.nasl"
+                }
+            }, 
             "name": "meta.function.nasl", 
             "patterns": [
+                {
+                    "begin": "(?=[A-Za-z_][A-Za-z0-9_]*)", 
+                    "contentName": "entity.name.function.nasl", 
+                    "end": "(?![A-Za-z0-9_])", 
+                    "patterns": [
+                        {
+                            "include": "#entity_name_function"
+                        }
+                    ]
+                }, 
                 {
                     "begin": "(\\()", 
                     "beginCaptures": {
@@ -72,7 +136,7 @@
                         }
                     }, 
                     "contentName": "meta.function.parameters.nasl", 
-                    "end": "(?=\\))", 
+                    "end": "(?=\\)\\s*)", 
                     "patterns": [
                         {
                             "captures": {
@@ -83,24 +147,171 @@
                                     "name": "punctuation.separator.parameters.nasl"
                                 }
                             }, 
-                            "match": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(?:(,)|(?=[\\n\\)\\:]))"
+                            "match": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(?:(,)|(?=[\\n\\)]))"
                         }
                     ]
                 }
             ]
+        }, 
+
+        {
+            "begin": "^\\s*(function)\\s+(?=[A-Za-z_][A-Za-z0-9_]*)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "storage.type.function.nasl"
+                }
+            }, 
+            "end": "(\\()|\\s*($\\n?|#.*$\\n?)", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.parameters.begin.nasl"
+                }, 
+                "2": {
+                    "name": "invalid.illegal.missing-parameters.nasl"
+                }
+            }, 
+            "name": "meta.function.nasl", 
+            "patterns": [
+                {
+                    "begin": "(?=[A-Za-z_][A-Za-z0-9_]*)", 
+                    "contentName": "entity.name.function.nasl", 
+                    "end": "(?![A-Za-z0-9_])", 
+                    "patterns": [
+                        {
+                            "include": "#entity_name_function"
+                        }
+                    ]
+                }
+            ]
+        },
+
+
+
+
+        {
+            "begin": "(?<=\\)|\\])\\s*(\\()", 
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.arguments.begin.nasl"
+                }
+            }, 
+            "contentName": "meta.function-call.arguments.nasl", 
+            "end": "(\\))", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.arguments.end.nasl"
+                }
+            }, 
+            "name": "meta.function-call.nasl", 
+            "patterns": [
+                {
+                    "include": "#keyword_arguments"
+                }, 
+                {
+                    "include": "$self"
+                }
+            ]
+        }, 
+
+        {
+            "begin": "(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\()", 
+            "end": "(\\))", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.arguments.end.nasl"
+                }
+            }, 
+            "name": "meta.function-call.nasl", 
+            "patterns": [
+                 
+                {
+                    "begin": "(\\()", 
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.arguments.begin.nasl"
+                        }
+                    }, 
+                    "contentName": "meta.function-call.arguments.nasl", 
+                    "end": "(?=\\))", 
+                    "patterns": [
+                        {
+                            "include": "#keyword_arguments"
+                        }, 
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        }, 
+
+        {
+            "begin": "(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\[)", 
+            "end": "(\\])", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.arguments.end.nasl"
+                }
+            }, 
+            "name": "meta.item-access.nasl", 
+            "patterns": [
+                {
+                    "begin": "(\\[)", 
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.arguments.begin.nasl"
+                        }
+                    }, 
+                    "contentName": "meta.item-access.arguments.nasl", 
+                    "end": "(?=\\])", 
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        }, 
+
+        {
+            "begin": "(?<=\\)|\\])\\s*(\\[)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "punctuation.definition.arguments.begin.nasl"
+                }
+            }, 
+            "contentName": "meta.item-access.arguments.nasl", 
+            "end": "(\\])", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.arguments.end.nasl"
+                }
+            }, 
+            "name": "meta.item-access.nasl", 
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
         }
+
+
+
 
     ],
 
     "repository": {
         "keyword_arguments": {
-            "begin": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(=)(?!=)", 
+            "begin": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(\\:)(?!=)", 
             "beginCaptures": {
                 "1": {
                     "name": "variable.parameter.function.nasl"
+                }, 
+                "2": {
+                    "name": "keyword.operator.assignment.nasl"
                 }
             }, 
-            "end": "\\s*(?:(,)|(?\\:$\\n?|[\\)]))", 
+            "end": "\\s*(?:(,)|(?=$\\n?|[\\)]))", 
             "endCaptures": {
                 "1": {
                     "name": "punctuation.separator.parameters.nasl"
@@ -111,7 +322,106 @@
                     "include": "$self"
                 }
             ]
+        }, 
+
+
+        "escaped_char": {
+            "captures": {
+                "1": {
+                    "name": "constant.character.escape.hex.nasl"
+                },
+                "10": {
+                    "name": "constant.character.escape.linefeed.nasl"
+                },
+                "11": {
+                    "name": "constant.character.escape.return.nasl"
+                },
+                "12": {
+                    "name": "constant.character.escape.tab.nasl"
+                },
+                "13": {
+                    "name": "constant.character.escape.vertical-tab.nasl"
+                },
+                "2": {
+                    "name": "constant.character.escape.octal.nasl"
+                },
+                "3": {
+                    "name": "constant.character.escape.newline.nasl"
+                },
+                "4": {
+                    "name": "constant.character.escape.backlash.nasl"
+                },
+                "5": {
+                    "name": "constant.character.escape.double-quote.nasl"
+                },
+                "6": {
+                    "name": "constant.character.escape.single-quote.nasl"
+                },
+                "7": {
+                    "name": "constant.character.escape.bell.nasl"
+                },
+                "8": {
+                    "name": "constant.character.escape.backspace.nasl"
+                },
+                "9": {
+                    "name": "constant.character.escape.formfeed.nasl"
+                }
+            },
+            "match": "(\\\\x[0-9A-F]{2})|(\\\\[0-7]{3})|(\\\\\\n)|(\\\\\\\\)|(\\\\\\\")|(\\\\')|(\\\\a)|(\\\\b)|(\\\\f)|(\\\\n)|(\\\\r)|(\\\\t)|(\\\\v)"
+        },
+
+        "entity_name_function": {
+            "patterns": [
+                {
+                    "include": "#builtin_function_names"
+                },
+                {
+                    "include": "#illegal_names"
+                },
+                {
+                    "include": "#generic_names"
+                }
+            ]
+        },
+
+        "function_name": {
+            "patterns": [
+                {
+                    "include": "#builtin_function_names"
+                },
+                {
+                    "include": "#generic_names"
+                }
+            ]
+        },
+
+        "generic_names": {
+            "match": "[A-Za-z_][A-Za-z0-9_]*"
+        },
+
+        "illegal_names": {
+            "match": "\\b(and|break|continue|else|for|global_var|local_var|if|not|or|return|while)\\b", 
+            "name": "invalid.illegal.name.nasl"
+        },
+
+        "builtin_function_names": {
+            "match": "(?x)\\b()\\b", 
+            "name": "support.function.builtin.nasl"
+        },
+
+        "builtin_variable_names": {
+            "comment": "magic variables which a class/module may have.", 
+            "match": "\\b()\\b", 
+            "name": "support.variable.builtin.nasl"
+        },
+
+        "builtin_constant_names": {
+            "comment": "magic variables which a class/module may have.", 
+            "match": "\\b()\\b", 
+            "name": "support.constant.builtin.nasl"
         }
+
+
     },
  "uuid": "39bb17ed-8cbc-4776-a720-a54e88da654d"
 }

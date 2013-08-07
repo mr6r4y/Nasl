@@ -19,6 +19,48 @@
 	<key>patterns</key>
 	<array>
 		<dict>
+			<key>match</key>
+			<string>&lt;\=|&gt;\=|\=\=|&lt;|&gt;|\!\=</string>
+			<key>name</key>
+			<string>keyword.operator.comparison.python</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\+\=|-\=|\*\=|/\=|//\=|%\=|&amp;\=|\|\=|\^\=|&gt;&gt;\=|&gt;&gt;&gt;\=|&lt;&lt;\=|\*\*\=</string>
+			<key>name</key>
+			<string>keyword.operator.assignment.augmented.python</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\+|\-|\*|\*\*|/|//|%|&lt;&lt;|&gt;&gt;|&gt;&gt;&gt;|&amp;|\||\^|~</string>
+			<key>name</key>
+			<string>keyword.operator.arithmetic.python</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\=</string>
+			<key>name</key>
+			<string>keyword.operator.assignment.python</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(?i:(0x\h*))</string>
+			<key>name</key>
+			<string>constant.numeric.integer.hexadecimal.nasl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(0[0-7]+)</string>
+			<key>name</key>
+			<string>constant.numeric.integer.octal.nasl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b([1-9]+[0-9]*|0)</string>
+			<key>name</key>
+			<string>constant.numeric.integer.decimal.nasl</string>
+		</dict>
+		<dict>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
@@ -58,10 +100,8 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>\\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)</string>
-					<key>name</key>
-					<string>constant.character.escape.js</string>
+					<key>include</key>
+					<string>#escaped_char</string>
 				</dict>
 			</array>
 		</dict>
@@ -107,11 +147,44 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(\))</string>
+			<string>(\))\s*(?:(.*$\n?))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.end.nasl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.section.function.begin.nasl</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>invalid.illegal.missing-section-begin.nasl</string>
+				</dict>
+			</dict>
 			<key>name</key>
 			<string>meta.function.nasl</string>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?=[A-Za-z_][A-Za-z0-9_]*)</string>
+					<key>contentName</key>
+					<string>entity.name.function.nasl</string>
+					<key>end</key>
+					<string>(?![A-Za-z0-9_])</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#entity_name_function</string>
+						</dict>
+					</array>
+				</dict>
 				<dict>
 					<key>begin</key>
 					<string>(\()</string>
@@ -126,7 +199,7 @@
 					<key>contentName</key>
 					<string>meta.function.parameters.nasl</string>
 					<key>end</key>
-					<string>(?=\))</string>
+					<string>(?=\)\s*)</string>
 					<key>patterns</key>
 					<array>
 						<dict>
@@ -144,19 +217,366 @@
 								</dict>
 							</dict>
 							<key>match</key>
-							<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(?:(,)|(?=[\n\)\:]))</string>
+							<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(?:(,)|(?=[\n\)]))</string>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^\s*(function)\s+(?=[A-Za-z_][A-Za-z0-9_]*)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.nasl</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>(\()|\s*($\n?|#.*$\n?)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.begin.nasl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>invalid.illegal.missing-parameters.nasl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.function.nasl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?=[A-Za-z_][A-Za-z0-9_]*)</string>
+					<key>contentName</key>
+					<string>entity.name.function.nasl</string>
+					<key>end</key>
+					<string>(?![A-Za-z0-9_])</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#entity_name_function</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?&lt;=\)|\])\s*(\()</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.begin.nasl</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>meta.function-call.arguments.nasl</string>
+			<key>end</key>
+			<string>(\))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.end.nasl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.function-call.nasl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#keyword_arguments</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?=[A-Za-z_][A-Za-z0-9_]*(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*\s*\()</string>
+			<key>end</key>
+			<string>(\))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.end.nasl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.function-call.nasl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(\()</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.arguments.begin.nasl</string>
+						</dict>
+					</dict>
+					<key>contentName</key>
+					<string>meta.function-call.arguments.nasl</string>
+					<key>end</key>
+					<string>(?=\))</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#keyword_arguments</string>
+						</dict>
+						<dict>
+							<key>include</key>
+							<string>$self</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?=[A-Za-z_][A-Za-z0-9_]*(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*\s*\[)</string>
+			<key>end</key>
+			<string>(\])</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.end.nasl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.item-access.nasl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(\[)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.arguments.begin.nasl</string>
+						</dict>
+					</dict>
+					<key>contentName</key>
+					<string>meta.item-access.arguments.nasl</string>
+					<key>end</key>
+					<string>(?=\])</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>$self</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(?&lt;=\)|\])\s*(\[)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.begin.nasl</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>meta.item-access.arguments.nasl</string>
+			<key>end</key>
+			<string>(\])</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.end.nasl</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.item-access.nasl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
 				</dict>
 			</array>
 		</dict>
 	</array>
 	<key>repository</key>
 	<dict>
+		<key>builtin_constant_names</key>
+		<dict>
+			<key>comment</key>
+			<string>magic variables which a class/module may have.</string>
+			<key>match</key>
+			<string>\b()\b</string>
+			<key>name</key>
+			<string>support.constant.builtin.nasl</string>
+		</dict>
+		<key>builtin_function_names</key>
+		<dict>
+			<key>match</key>
+			<string>(?x)\b()\b</string>
+			<key>name</key>
+			<string>support.function.builtin.nasl</string>
+		</dict>
+		<key>builtin_variable_names</key>
+		<dict>
+			<key>comment</key>
+			<string>magic variables which a class/module may have.</string>
+			<key>match</key>
+			<string>\b()\b</string>
+			<key>name</key>
+			<string>support.variable.builtin.nasl</string>
+		</dict>
+		<key>entity_name_function</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#builtin_function_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#illegal_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#generic_names</string>
+				</dict>
+			</array>
+		</dict>
+		<key>escaped_char</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.hex.nasl</string>
+				</dict>
+				<key>10</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.linefeed.nasl</string>
+				</dict>
+				<key>11</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.return.nasl</string>
+				</dict>
+				<key>12</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.tab.nasl</string>
+				</dict>
+				<key>13</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.vertical-tab.nasl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.octal.nasl</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.newline.nasl</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.backlash.nasl</string>
+				</dict>
+				<key>5</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.double-quote.nasl</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.single-quote.nasl</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.bell.nasl</string>
+				</dict>
+				<key>8</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.backspace.nasl</string>
+				</dict>
+				<key>9</key>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.formfeed.nasl</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(\\x[0-9A-F]{2})|(\\[0-7]{3})|(\\\n)|(\\\\)|(\\\")|(\\')|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v)</string>
+		</dict>
+		<key>function_name</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#builtin_function_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#generic_names</string>
+				</dict>
+			</array>
+		</dict>
+		<key>generic_names</key>
+		<dict>
+			<key>match</key>
+			<string>[A-Za-z_][A-Za-z0-9_]*</string>
+		</dict>
+		<key>illegal_names</key>
+		<dict>
+			<key>match</key>
+			<string>\b(and|break|continue|else|for|global_var|local_var|if|not|or|return|while)\b</string>
+			<key>name</key>
+			<string>invalid.illegal.name.nasl</string>
+		</dict>
 		<key>keyword_arguments</key>
 		<dict>
 			<key>begin</key>
-			<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(=)(?!=)</string>
+			<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(\:)(?!=)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -164,9 +584,14 @@
 					<key>name</key>
 					<string>variable.parameter.function.nasl</string>
 				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.nasl</string>
+				</dict>
 			</dict>
 			<key>end</key>
-			<string>\s*(?:(,)|(?\:$\n?|[\)]))</string>
+			<string>\s*(?:(,)|(?=$\n?|[\)]))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>1</key>
