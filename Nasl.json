@@ -1,0 +1,117 @@
+{ 
+    "name": "Nasl", 
+    "scopeName": "source.nasl", 
+    "fileTypes": ["nasl", "inc"], 
+    "foldingStartMarker": "(?x)\n\t\t /\\*\\*(?!\\*)\n\t\t|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))\n\t", 
+    "foldingStopMarker": "(?<!\\*)\\*\\*/|^\\s*\\}", 
+    "patterns": [
+        {
+            "captures": {
+                "1": {
+                    "name": "punctuation.definition.comment.nasl"
+                }
+            }, 
+            "match": "(#).*$\\n?", 
+            "name": "comment.line.number-sign.nasl"
+        },
+        {
+            "begin": "'", 
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin.nasl"
+                }
+            }, 
+            "end": "'", 
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end.nasl"
+                }
+            }, 
+            "name": "string.quoted.single.js", 
+            "patterns": [
+                {
+                    "match": "\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)", 
+                    "name": "constant.character.escape.js"
+                }
+            ]
+        },
+        {
+            "begin": "\"", 
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin.nasl"
+                }
+            }, 
+            "end": "\"", 
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end.nasl"
+                }
+            }, 
+            "name": "string.quoted.double.nasl"
+        },
+        {
+            "match": "\\b(local_var|global_var)\\b", 
+            "name": "storage.modifier.nasl"
+        },
+        {
+            "begin": "^\\s*(function)\\s+(?=[A-Za-z_][A-Za-z0-9_]*\\s*\\()", 
+            "beginCaptures": {
+                "1": {
+                    "name": "storage.type.function.nasl"
+                }
+            }, 
+            "end": "(\\))", 
+            "name": "meta.function.nasl", 
+            "patterns": [
+                {
+                    "begin": "(\\()", 
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.parameters.begin.nasl"
+                        }
+                    }, 
+                    "contentName": "meta.function.parameters.nasl", 
+                    "end": "(?=\\))", 
+                    "patterns": [
+                        {
+                            "captures": {
+                                "1": {
+                                    "name": "variable.parameter.function.nasl"
+                                }, 
+                                "2": {
+                                    "name": "punctuation.separator.parameters.nasl"
+                                }
+                            }, 
+                            "match": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(?:(,)|(?=[\\n\\)\\:]))"
+                        }
+                    ]
+                }
+            ]
+        }
+
+    ],
+
+    "repository": {
+        "keyword_arguments": {
+            "begin": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(=)(?!=)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "variable.parameter.function.nasl"
+                }
+            }, 
+            "end": "\\s*(?:(,)|(?\\:$\\n?|[\\)]))", 
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.separator.parameters.nasl"
+                }
+            }, 
+            "patterns": [
+                {
+                    "include": "$self"
+                }
+            ]
+        }
+    },
+ "uuid": "39bb17ed-8cbc-4776-a720-a54e88da654d"
+}
