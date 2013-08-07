@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        
-    </dict>
+<dict>
+    <key>fileTypes</key>
+    <array>
+        <string>nasl</string>
+        <string>inc</string>
+    </array>
+    <key>name</key>
+    <string>Nasl</string>
+    <key>patterns</key>
+    <array>
+        <dict>
+        </dict>
+    </array>
+    <key>scopeName</key>
+    <string>source.nasl</string>
+    <key>uuid</key>
+    <string>39bb17ed-8cbc-4776-a720-a54e88da654d</string>
+</dict>
 </plist>
