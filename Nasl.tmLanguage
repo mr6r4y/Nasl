@@ -17,6 +17,18 @@
 	<array>
 		<dict>
 			<key>include</key>
+			<string>#pure_string</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#impure_string</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#comment</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#augmented_assign_operators</string>
 		</dict>
 		<dict>
@@ -68,385 +80,12 @@
 			<string>#builtin_constant_names</string>
 		</dict>
 		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.comment.nasl</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>(#).*$\n?</string>
-			<key>name</key>
-			<string>comment.line.number-sign.nasl</string>
+			<key>include</key>
+			<string>#loc</string>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>'</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.nasl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>'</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.single.js</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#escaped_char</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>"</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.begin.nasl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>"</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.string.end.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>string.quoted.double.nasl</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(local_var|global_var)\b</string>
-			<key>name</key>
-			<string>storage.modifier.nasl</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>^\s*(function)\s+(?=[A-Za-z_][A-Za-z0-9_]*\s*\()</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>storage.type.function.nasl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>(\))\s*(?:(.*$\n?))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.parameters.end.nasl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.section.function.begin.nasl</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>invalid.illegal.missing-section-begin.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.function.nasl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?=[A-Za-z_][A-Za-z0-9_]*)</string>
-					<key>contentName</key>
-					<string>entity.name.function.nasl</string>
-					<key>end</key>
-					<string>(?![A-Za-z0-9_])</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#entity_name_function</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(\()</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.parameters.begin.nasl</string>
-						</dict>
-					</dict>
-					<key>contentName</key>
-					<string>meta.function.parameters.nasl</string>
-					<key>end</key>
-					<string>(?=\)\s*)</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>captures</key>
-							<dict>
-								<key>1</key>
-								<dict>
-									<key>name</key>
-									<string>variable.parameter.function.nasl</string>
-								</dict>
-								<key>2</key>
-								<dict>
-									<key>name</key>
-									<string>punctuation.separator.parameters.nasl</string>
-								</dict>
-							</dict>
-							<key>match</key>
-							<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(?:(,)|(?=[\n\)]))</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>^\s*(function)\s+(?=[A-Za-z_][A-Za-z0-9_]*)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>storage.type.function.nasl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>(\()|\s*($\n?|#.*$\n?)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.parameters.begin.nasl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>invalid.illegal.missing-parameters.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.function.nasl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?=[A-Za-z_][A-Za-z0-9_]*)</string>
-					<key>contentName</key>
-					<string>entity.name.function.nasl</string>
-					<key>end</key>
-					<string>(?![A-Za-z0-9_])</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#entity_name_function</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?&lt;=\)|\])\s*(\()</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.arguments.begin.nasl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>meta.function-call.arguments.nasl</string>
-			<key>end</key>
-			<string>(\))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.arguments.end.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.function-call.nasl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#keyword_arguments</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?=[A-Za-z_][A-Za-z0-9_]*(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*\s*\()</string>
-			<key>end</key>
-			<string>(\))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.arguments.end.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.function-call.nasl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(?=[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*\s*\()</string>
-					<key>end</key>
-					<string>(?=\s*\()</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#name</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(\()</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.arguments.begin.nasl</string>
-						</dict>
-					</dict>
-					<key>contentName</key>
-					<string>meta.function-call.arguments.nasl</string>
-					<key>end</key>
-					<string>(?=\))</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#keyword_arguments</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>$self</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?=[A-Za-z_][A-Za-z0-9_]*(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*\s*\[)</string>
-			<key>end</key>
-			<string>(\])</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.arguments.end.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.item-access.nasl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(\[)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.arguments.begin.nasl</string>
-						</dict>
-					</dict>
-					<key>contentName</key>
-					<string>meta.item-access.arguments.nasl</string>
-					<key>end</key>
-					<string>(?=\])</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>$self</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?&lt;=\)|\])\s*(\[)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.arguments.begin.nasl</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>meta.item-access.arguments.nasl</string>
-			<key>end</key>
-			<string>(\])</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.arguments.end.nasl</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.item-access.nasl</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
-				</dict>
-			</array>
+			<key>include</key>
+			<string>#glob</string>
 		</dict>
 	</array>
 	<key>repository</key>
@@ -495,6 +134,21 @@
 			<key>name</key>
 			<string>support.variable.builtin.nasl</string>
 		</dict>
+		<key>comment</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.nasl</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(#).*$\n?</string>
+			<key>name</key>
+			<string>comment.line.number-sign.nasl</string>
+		</dict>
 		<key>comparison_operators</key>
 		<dict>
 			<key>match</key>
@@ -508,24 +162,6 @@
 			<string>\b([1-9]+[0-9]*|0)</string>
 			<key>name</key>
 			<string>constant.numeric.integer.decimal.nasl</string>
-		</dict>
-		<key>entity_name_function</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#builtin_function_names</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#illegal_names</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#identifier</string>
-				</dict>
-			</array>
 		</dict>
 		<key>escaped_char</key>
 		<dict>
@@ -600,19 +236,12 @@
 			<key>match</key>
 			<string>(\\x[0-9A-F]{2})|(\\[0-7]{3})|(\\\n)|(\\\\)|(\\\")|(\\')|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v)</string>
 		</dict>
-		<key>function_name</key>
+		<key>glob</key>
 		<dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>#builtin_function_names</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#identifier</string>
-				</dict>
-			</array>
+			<key>match</key>
+			<string>\b(global_var)\b</string>
+			<key>name</key>
+			<string>storage.modifier.nasl</string>
 		</dict>
 		<key>hexadecimal_literal</key>
 		<dict>
@@ -626,12 +255,30 @@
 			<key>match</key>
 			<string>[A-Za-z_][A-Za-z0-9_]*</string>
 		</dict>
-		<key>illegal_names</key>
+		<key>impure_string</key>
 		<dict>
-			<key>match</key>
-			<string>\b(and|or|break|continue|else|for|foreach|global_var|local_var|if|return|while|until)\b</string>
+			<key>begin</key>
+			<string>"</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.nasl</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>"</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.nasl</string>
+				</dict>
+			</dict>
 			<key>name</key>
-			<string>invalid.illegal.name.nasl</string>
+			<string>string.quoted.double.nasl</string>
 		</dict>
 		<key>increment_decrement_operators</key>
 		<dict>
@@ -640,47 +287,12 @@
 			<key>name</key>
 			<string>keyword.operator.increment-decrement.nasl</string>
 		</dict>
-		<key>keyword_arguments</key>
-		<dict>
-			<key>begin</key>
-			<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(\:)(?!=)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>variable.parameter.function.nasl</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.operator.assignment.nasl</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\s*(?:(,)|(?=$\n?|[\)]))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.separator.parameters.nasl</string>
-				</dict>
-			</dict>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
-				</dict>
-			</array>
-		</dict>
 		<key>keywords</key>
 		<dict>
 			<key>comment</key>
 			<string>keywords that delimit flow blocks or alter flow from within a block</string>
 			<key>match</key>
-			<string>\b(if|else|for|while|repeat|until|foreach|break|continue|return)\b</string>
+			<string>\b(function|if|else|for|while|repeat|until|foreach|break|continue|return)\b</string>
 			<key>name</key>
 			<string>keyword.control.flow.nasl</string>
 		</dict>
@@ -712,6 +324,13 @@
 			<key>name</key>
 			<string>support.function.library.nasl</string>
 		</dict>
+		<key>loc</key>
+		<dict>
+			<key>match</key>
+			<string>\b(local_var)\b</string>
+			<key>name</key>
+			<string>storage.modifier.nasl</string>
+		</dict>
 		<key>logical_operators</key>
 		<dict>
 			<key>comment</key>
@@ -721,82 +340,6 @@
 			<key>name</key>
 			<string>keyword.operator.logical.nasl</string>
 		</dict>
-		<key>name</key>
-		<dict>
-			<key>begin</key>
-			<string>(?=[A-Za-z_][A-Za-z0-9_]*)</string>
-			<key>end</key>
-			<string>(?![A-Za-z0-9_])</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>begin</key>
-					<string>(\.)(?=[A-Za-z_][A-Za-z0-9_]*)</string>
-					<key>end</key>
-					<string>(?![A-Za-z0-9_])</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#builtin_function_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#builtin_constant_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#builtin_variable_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#illegal_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#language_variables</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#identifier</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
-					<key>begin</key>
-					<string>(?&lt;!\.)(?=[A-Za-z_][A-Za-z0-9_]*)</string>
-					<key>end</key>
-					<string>(?![A-Za-z0-9_])</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#builtin_function_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#builtin_constant_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#builtin_variable_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#illegal_names</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#language_variables</string>
-						</dict>
-						<dict>
-							<key>include</key>
-							<string>#identifier</string>
-						</dict>
-					</array>
-				</dict>
-			</array>
-		</dict>
 		<key>octal_literal</key>
 		<dict>
 			<key>match</key>
@@ -804,20 +347,37 @@
 			<key>name</key>
 			<string>constant.numeric.integer.octal.nasl</string>
 		</dict>
-		<key>special_variables</key>
+		<key>pure_string</key>
 		<dict>
-			<key>captures</key>
+			<key>begin</key>
+			<string>'</string>
+			<key>beginCaptures</key>
 			<dict>
-				<key>1</key>
+				<key>0</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.variable.nasl</string>
+					<string>punctuation.definition.string.begin.nasl</string>
 				</dict>
 			</dict>
-			<key>match</key>
-			<string>(\$[1-9]{1,})|(\$\*)</string>
+			<key>end</key>
+			<string>'</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.nasl</string>
+				</dict>
+			</dict>
 			<key>name</key>
-			<string>variable.other.positional.nasl</string>
+			<string>string.quoted.single.js</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#escaped_char</string>
+				</dict>
+			</array>
 		</dict>
 	</dict>
 	<key>scopeName</key>
