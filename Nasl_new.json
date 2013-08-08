@@ -54,10 +54,10 @@
             "include": "#builtin_constant_names"
         },
         {
-            "include": "#loc"
+            "include": "#loc_keyword"
         },
         {
-            "include": "#glob"
+            "include": "#glob_keyword"
         }
 
 
@@ -214,19 +214,23 @@
         },
 
 
-        "loc": {
+        "loc_keyword": {
             "match": "\\b(local_var)\\b",
-            "name": "storage.modifier.nasl"
+            "name": "storage.modifier.local.nasl"
         },
-        "glob": {
+        "glob_keyword": {
             "match": "\\b(global_var)\\b",
-            "name": "storage.modifier.nasl"
+            "name": "storage.modifier.global.nasl"
+        },
+
+        "include_keyword": {
+            "match": "\\b(include)\\b"
         },
 
 
 
         "builtin_function_names": {
-            "match": "(?x)\\b(include|isnull|keys|set_kb_item|get_kb_item|get_kb_list|replace_kb_item|scanner_status|security_note|security_hole|security_warning|script_add_preference|script_bugtraq_id|script_category|script_copyright|script_cve_id|script_dependencie|script_dependencies|script_description|script_exclude_keys|script_family|script_get_preference_file_content|script_get_preference_file_location|script_id|script_name|script_require_keys|script_require_ports|script_require_udp_ports|script_summary|script_timeout|script_version|get_preference|close|end_denial|ftp_get_pasv_port|get_host_name|get_host_ip|get_host_open_port|get_port_transport|get_port_state|get_source_port|get_tcp_port_state|get_udp_port_state|islocalhost|islocalnet|join_multicast_group|leave_multicast_group|open_priv_sock_tcp|open_priv_sock_udp|open_sock_tcp|open_sock_udp|recv|recv_line|send|scanner_add_port|scanner_get_port|tcp_ping|telnet_init|this_host|this_host_name|ftp_log_in|start_denial|chomp|crap|display|egrep|ereg|ereg_replace|eregmatch|hex|hexstr|insstr|int|match|ord|raw_string|str_replace|string|strcat|stridx|strstr|split|strlen|substr|tolower|toupper|cgibin|http_delete|http_get|http_close_socket|http_head|http_open_socket|http_recv_headers|http_post|http_put|is_cgi_installed|dump_ip_packet|dump_tcp_packet|dump_udp_packet|forge_icmp_packet|forge_igmp_packet|forge_ip_packet|forge_tcp_packet|forge_udp_packet|get_icmp_element|get_ip_element|get_tcp_element|get_udp_element|insert_ip_options|pcap_next|set_ip_elements|set_tcp_elements|set_udp_elements|send_packet|HMAC_DSS|HMAC_MD2|HMAC_MD4|HMAC_MD5|HMAC_RIPEMD160|HMAC_SHA|HMAC_SHA1|MD2|MD4|MD5|RIPEMD160|SHA|SHA1|cvsdate2unixtime|defined_func|dump_ctxt|func_has_arg|func_named_args|func_unnamed_args|gettimeofday|localtime|make_array|make_list|max_index|mktime|replace_or_set_kb_item|safe_checks|sleep|type_of|usleep|unixtime|find_in_path|pread|file_close|file_open|file_read|file_seek|file_stat|file_write|fread|fwrite|get_tmp_dir|unlink)\\b",
+            "match": "(?x)\\b(isnull|keys|set_kb_item|get_kb_item|get_kb_list|replace_kb_item|scanner_status|security_note|security_hole|security_warning|script_add_preference|script_bugtraq_id|script_category|script_copyright|script_cve_id|script_dependencie|script_dependencies|script_description|script_exclude_keys|script_family|script_get_preference_file_content|script_get_preference_file_location|script_id|script_name|script_require_keys|script_require_ports|script_require_udp_ports|script_summary|script_timeout|script_version|get_preference|close|end_denial|ftp_get_pasv_port|get_host_name|get_host_ip|get_host_open_port|get_port_transport|get_port_state|get_source_port|get_tcp_port_state|get_udp_port_state|islocalhost|islocalnet|join_multicast_group|leave_multicast_group|open_priv_sock_tcp|open_priv_sock_udp|open_sock_tcp|open_sock_udp|recv|recv_line|send|scanner_add_port|scanner_get_port|tcp_ping|telnet_init|this_host|this_host_name|ftp_log_in|start_denial|chomp|crap|display|egrep|ereg|ereg_replace|eregmatch|hex|hexstr|insstr|int|match|ord|raw_string|str_replace|string|strcat|stridx|strstr|split|strlen|substr|tolower|toupper|cgibin|http_delete|http_get|http_close_socket|http_head|http_open_socket|http_recv_headers|http_post|http_put|is_cgi_installed|dump_ip_packet|dump_tcp_packet|dump_udp_packet|forge_icmp_packet|forge_igmp_packet|forge_ip_packet|forge_tcp_packet|forge_udp_packet|get_icmp_element|get_ip_element|get_tcp_element|get_udp_element|insert_ip_options|pcap_next|set_ip_elements|set_tcp_elements|set_udp_elements|send_packet|HMAC_DSS|HMAC_MD2|HMAC_MD4|HMAC_MD5|HMAC_RIPEMD160|HMAC_SHA|HMAC_SHA1|MD2|MD4|MD5|RIPEMD160|SHA|SHA1|cvsdate2unixtime|defined_func|dump_ctxt|func_has_arg|func_named_args|func_unnamed_args|gettimeofday|localtime|make_array|make_list|max_index|mktime|replace_or_set_kb_item|safe_checks|sleep|type_of|usleep|unixtime|find_in_path|pread|file_close|file_open|file_read|file_seek|file_stat|file_write|fread|fwrite|get_tmp_dir|unlink)\\b",
             "name": "support.function.builtin.nasl"
         },
         "builtin_variable_names": {
@@ -242,6 +246,8 @@
             "match": "(?x)\\b(dump|hexdump|ftpclose|get_ftp_banner|ftp_recv_line|check_win_dir_trav|get_cgi_path|get_http_banner|get_http_port|http_40x|http_is_dead|http_recv_body|http_recv|http_recv_length|locate_cgi|php_ver_match|cgi_dirs|http_keepalive_send_recv|is_cgi_installed_ka|check_win_dir_traversal_ka|register_service|known_service|get_unknown_banner|set_unknown_banner|get_service_banner_line|get_rpc_port|service_is_unknown|mount|umount|readdir|cwd|smb_session_request|smb_neg_prot|smb_session_setup|session_extract_uid|smb_tconx|tconx_extract_tid|OpenAndX|ReadAndX|smb_get_file_size|smbntcreatex|smbntcreatex_extract_pipe|pipe_accessible_registry|registry_access_step_1|registry_get_key|registry_get_item_sz|registry_decode_sz|registry_get_item_dword|registry_decode_dword|registry_get_key_security|registry_key_writeable_by_non_admin|smtp_send_socket|smtp_send_port|smtp_from_header|smtp_to_header|get_smtp_banner|smtp_recv_banner|get_telnet_banner|set_telnet_banner|create_uddi_xml)\\b",
             "name": "support.function.library.nasl"
         },
+
+
         "library_variables_names": {
             "match": "(?x)\\b()\\b",
             "name": "support.function.library.nasl"
@@ -249,12 +255,21 @@
          "library_constant_names": {
             "match": "(?x)\\b()\\b",
             "name": "support.function.library.nasl"
-        }
+        },
 
 
 
 
-
+        "decl_list": {
+            "patterns": [
+                {
+                    "include": "#instr_decl"
+                },
+                {
+                    "include": "#instr_decl"
+                }
+            ]
+        },
 
 
 
