@@ -81,11 +81,23 @@
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#loc</string>
+			<string>#loc_keyword</string>
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#glob</string>
+			<string>#glob_keyword</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#block</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#keyword_arguments</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#function_call</string>
 		</dict>
 	</array>
 	<key>repository</key>
@@ -111,6 +123,40 @@
 			<key>name</key>
 			<string>keyword.operator.assignment.augmented.nasl</string>
 		</dict>
+		<key>block</key>
+		<dict>
+			<key>begin</key>
+			<string>\{</string>
+			<key>end</key>
+			<string>\}</string>
+			<key>name</key>
+			<string>meta.block.nasl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#block_innards</string>
+				</dict>
+			</array>
+		</dict>
+		<key>block_innards</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#function_call</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#block</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>$base</string>
+				</dict>
+			</array>
+		</dict>
 		<key>builtin_constant_names</key>
 		<dict>
 			<key>comment</key>
@@ -123,7 +169,7 @@
 		<key>builtin_function_names</key>
 		<dict>
 			<key>match</key>
-			<string>(?x)\b(include|isnull|keys|set_kb_item|get_kb_item|get_kb_list|replace_kb_item|scanner_status|security_note|security_hole|security_warning|script_add_preference|script_bugtraq_id|script_category|script_copyright|script_cve_id|script_dependencie|script_dependencies|script_description|script_exclude_keys|script_family|script_get_preference_file_content|script_get_preference_file_location|script_id|script_name|script_require_keys|script_require_ports|script_require_udp_ports|script_summary|script_timeout|script_version|get_preference|close|end_denial|ftp_get_pasv_port|get_host_name|get_host_ip|get_host_open_port|get_port_transport|get_port_state|get_source_port|get_tcp_port_state|get_udp_port_state|islocalhost|islocalnet|join_multicast_group|leave_multicast_group|open_priv_sock_tcp|open_priv_sock_udp|open_sock_tcp|open_sock_udp|recv|recv_line|send|scanner_add_port|scanner_get_port|tcp_ping|telnet_init|this_host|this_host_name|ftp_log_in|start_denial|chomp|crap|display|egrep|ereg|ereg_replace|eregmatch|hex|hexstr|insstr|int|match|ord|raw_string|str_replace|string|strcat|stridx|strstr|split|strlen|substr|tolower|toupper|cgibin|http_delete|http_get|http_close_socket|http_head|http_open_socket|http_recv_headers|http_post|http_put|is_cgi_installed|dump_ip_packet|dump_tcp_packet|dump_udp_packet|forge_icmp_packet|forge_igmp_packet|forge_ip_packet|forge_tcp_packet|forge_udp_packet|get_icmp_element|get_ip_element|get_tcp_element|get_udp_element|insert_ip_options|pcap_next|set_ip_elements|set_tcp_elements|set_udp_elements|send_packet|HMAC_DSS|HMAC_MD2|HMAC_MD4|HMAC_MD5|HMAC_RIPEMD160|HMAC_SHA|HMAC_SHA1|MD2|MD4|MD5|RIPEMD160|SHA|SHA1|cvsdate2unixtime|defined_func|dump_ctxt|func_has_arg|func_named_args|func_unnamed_args|gettimeofday|localtime|make_array|make_list|max_index|mktime|replace_or_set_kb_item|safe_checks|sleep|type_of|usleep|unixtime|find_in_path|pread|file_close|file_open|file_read|file_seek|file_stat|file_write|fread|fwrite|get_tmp_dir|unlink)\b</string>
+			<string>(?x)\b(isnull|keys|set_kb_item|get_kb_item|get_kb_list|replace_kb_item|scanner_status|security_note|security_hole|security_warning|script_add_preference|script_bugtraq_id|script_category|script_copyright|script_cve_id|script_dependencie|script_dependencies|script_description|script_exclude_keys|script_family|script_get_preference_file_content|script_get_preference_file_location|script_id|script_name|script_require_keys|script_require_ports|script_require_udp_ports|script_summary|script_timeout|script_version|get_preference|close|end_denial|ftp_get_pasv_port|get_host_name|get_host_ip|get_host_open_port|get_port_transport|get_port_state|get_source_port|get_tcp_port_state|get_udp_port_state|islocalhost|islocalnet|join_multicast_group|leave_multicast_group|open_priv_sock_tcp|open_priv_sock_udp|open_sock_tcp|open_sock_udp|recv|recv_line|send|scanner_add_port|scanner_get_port|tcp_ping|telnet_init|this_host|this_host_name|ftp_log_in|start_denial|chomp|crap|display|egrep|ereg|ereg_replace|eregmatch|hex|hexstr|insstr|int|match|ord|raw_string|str_replace|string|strcat|stridx|strstr|split|strlen|substr|tolower|toupper|cgibin|http_delete|http_get|http_close_socket|http_head|http_open_socket|http_recv_headers|http_post|http_put|is_cgi_installed|dump_ip_packet|dump_tcp_packet|dump_udp_packet|forge_icmp_packet|forge_igmp_packet|forge_ip_packet|forge_tcp_packet|forge_udp_packet|get_icmp_element|get_ip_element|get_tcp_element|get_udp_element|insert_ip_options|pcap_next|set_ip_elements|set_tcp_elements|set_udp_elements|send_packet|HMAC_DSS|HMAC_MD2|HMAC_MD4|HMAC_MD5|HMAC_RIPEMD160|HMAC_SHA|HMAC_SHA1|MD2|MD4|MD5|RIPEMD160|SHA|SHA1|cvsdate2unixtime|defined_func|dump_ctxt|func_has_arg|func_named_args|func_unnamed_args|gettimeofday|localtime|make_array|make_list|max_index|mktime|replace_or_set_kb_item|safe_checks|sleep|type_of|usleep|unixtime|find_in_path|pread|file_close|file_open|file_read|file_seek|file_stat|file_write|fread|fwrite|get_tmp_dir|unlink)\b</string>
 			<key>name</key>
 			<string>support.function.builtin.nasl</string>
 		</dict>
@@ -162,6 +208,28 @@
 			<string>\b([1-9]+[0-9]*|0)</string>
 			<key>name</key>
 			<string>constant.numeric.integer.decimal.nasl</string>
+		</dict>
+		<key>entity_name_function</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#builtin_function_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#library_function_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#illegal_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#identifier</string>
+				</dict>
+			</array>
 		</dict>
 		<key>escaped_char</key>
 		<dict>
@@ -236,12 +304,55 @@
 			<key>match</key>
 			<string>(\\x[0-9A-F]{2})|(\\[0-7]{3})|(\\\n)|(\\\\)|(\\\")|(\\')|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v)</string>
 		</dict>
-		<key>glob</key>
+		<key>function_call</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.whitespace.function-call.leading.nasl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>support.function.any-method.nasl</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.nasl</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>(?x) (?: (?= \s )  (?:(?&lt;=else|return) | (?&lt;!\w)) (\s+))?(\b(?!(while|for|foreach|repeat|if|else|return)\s*\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\b )++  ) \s*(\()</string>
+			<key>name</key>
+			<string>meta.function-call.nasl</string>
+		</dict>
+		<key>function_name</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#builtin_function_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#library_function_names</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#identifier</string>
+				</dict>
+			</array>
+		</dict>
+		<key>glob_keyword</key>
 		<dict>
 			<key>match</key>
 			<string>\b(global_var)\b</string>
 			<key>name</key>
-			<string>storage.modifier.nasl</string>
+			<string>storage.modifier.global.nasl</string>
 		</dict>
 		<key>hexadecimal_literal</key>
 		<dict>
@@ -254,6 +365,13 @@
 		<dict>
 			<key>match</key>
 			<string>[A-Za-z_][A-Za-z0-9_]*</string>
+		</dict>
+		<key>illegal_names</key>
+		<dict>
+			<key>match</key>
+			<string>\b(and|or|break|continue|else|for|foreach|global_var|local_var|if|return|while|until)\b</string>
+			<key>name</key>
+			<string>invalid.illegal.name.nasl</string>
 		</dict>
 		<key>impure_string</key>
 		<dict>
@@ -280,12 +398,54 @@
 			<key>name</key>
 			<string>string.quoted.double.nasl</string>
 		</dict>
+		<key>include_keyword</key>
+		<dict>
+			<key>match</key>
+			<string>\b(include)\b</string>
+			<key>name</key>
+			<string>keyword.include.nasl</string>
+		</dict>
 		<key>increment_decrement_operators</key>
 		<dict>
 			<key>match</key>
 			<string>(\-\-|\+\+)</string>
 			<key>name</key>
 			<string>keyword.operator.increment-decrement.nasl</string>
+		</dict>
+		<key>keyword_arguments</key>
+		<dict>
+			<key>begin</key>
+			<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(\:)(?!=)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.nasl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.nasl</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\s*(?:(,)|(?=$\n?|[\)]))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.parameters.nasl</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+			</array>
 		</dict>
 		<key>keywords</key>
 		<dict>
@@ -324,12 +484,12 @@
 			<key>name</key>
 			<string>support.function.library.nasl</string>
 		</dict>
-		<key>loc</key>
+		<key>loc_keyword</key>
 		<dict>
 			<key>match</key>
 			<string>\b(local_var)\b</string>
 			<key>name</key>
-			<string>storage.modifier.nasl</string>
+			<string>storage.modifier.local.nasl</string>
 		</dict>
 		<key>logical_operators</key>
 		<dict>
