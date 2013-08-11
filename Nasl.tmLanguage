@@ -93,11 +93,19 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#function_call</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#keyword_arguments</string>
 		</dict>
 		<dict>
 			<key>include</key>
-			<string>#function_call</string>
+			<string>#function_storage_type</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#function_definition</string>
 		</dict>
 	</array>
 	<key>repository</key>
@@ -329,6 +337,85 @@
 			<key>name</key>
 			<string>meta.function-call.nasl</string>
 		</dict>
+		<key>function_definition</key>
+		<dict>
+			<key>begin</key>
+			<string>^\s*(function)\s+(?=[A-Za-z_][A-Za-z0-9_]*\s*\()</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.python</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>(\))\s*</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.end.python</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>meta.function.python</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>begin</key>
+					<string>(?=[A-Za-z_][A-Za-z0-9_]*)</string>
+					<key>contentName</key>
+					<string>entity.name.function.python</string>
+					<key>end</key>
+					<string>(?![A-Za-z0-9_])</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#entity_name_function</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(\()</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.parameters.begin.python</string>
+						</dict>
+					</dict>
+					<key>contentName</key>
+					<string>meta.function.parameters.python</string>
+					<key>end</key>
+					<string>(?=\)\s*)</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>captures</key>
+							<dict>
+								<key>1</key>
+								<dict>
+									<key>name</key>
+									<string>variable.parameter.function.python</string>
+								</dict>
+								<key>2</key>
+								<dict>
+									<key>name</key>
+									<string>punctuation.separator.parameters.python</string>
+								</dict>
+							</dict>
+							<key>match</key>
+							<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\s*(?:(,)|(?=[\n\)]))</string>
+						</dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
 		<key>function_name</key>
 		<dict>
 			<key>patterns</key>
@@ -346,6 +433,19 @@
 					<string>#identifier</string>
 				</dict>
 			</array>
+		</dict>
+		<key>function_storage_type</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.python</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b(funciton)\b</string>
 		</dict>
 		<key>glob_keyword</key>
 		<dict>
@@ -452,7 +552,7 @@
 			<key>comment</key>
 			<string>keywords that delimit flow blocks or alter flow from within a block</string>
 			<key>match</key>
-			<string>\b(function|if|else|for|while|repeat|until|foreach|break|continue|return)\b</string>
+			<string>\b(if|else|for|while|repeat|until|foreach|break|continue|return)\b</string>
 			<key>name</key>
 			<string>keyword.control.flow.nasl</string>
 		</dict>

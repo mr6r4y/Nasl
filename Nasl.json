@@ -63,18 +63,17 @@
             "include": "#block"
         },
         {
+            "include": "#function_call"
+        },
+        {
             "include": "#keyword_arguments"
         },
-
-
         {
-            "include": "#function_call"
+            "include": "#function_storage_type"
+        },
+        {
+            "include": "#function_definition"
         }
-
-
-
-
-
     ],
 
     "repository": {
@@ -208,12 +207,21 @@
         },
         "keywords": {
             "comment": "keywords that delimit flow blocks or alter flow from within a block",
-            "match": "\\b(function|if|else|for|while|repeat|until|foreach|break|continue|return)\\b",
+            "match": "\\b(if|else|for|while|repeat|until|foreach|break|continue|return)\\b",
             "name": "keyword.control.flow.nasl"
         },
         "language_constants": {
             "match": "\\b(NULL|TRUE|FALSE)\\b",
             "name": "constant.language.nasl"
+        },
+
+        "function_storage_type": {
+            "captures": {
+                "1": {
+                    "name": "storage.type.function.python"
+                }
+            },
+            "match": "\\b(funciton)\\b"
         },
 
 
@@ -291,9 +299,9 @@
 
 
         "block": {
-            "begin": "\\{", 
-            "end": "\\}", 
-            "name": "meta.block.nasl", 
+            "begin": "\\{",
+            "end": "\\}",
+            "name": "meta.block.nasl",
             "patterns": [
                 {
                     "include": "#block_innards"
@@ -301,38 +309,88 @@
             ]
         },
 
-        "function_call": {
-            "captures": {
+        "function_definition": {
+            "begin": "^\\s*(function)\\s+(?=[A-Za-z_][A-Za-z0-9_]*\\s*\\()",
+            "beginCaptures": {
                 "1": {
-                    "name": "punctuation.whitespace.function-call.leading.nasl"
-                }, 
-                "2": {
-                    "name": "support.function.any-method.nasl"
-                }, 
-                "3": {
-                    "name": "punctuation.definition.parameters.nasl"
+                    "name": "storage.type.function.python"
                 }
-            }, 
-            "match": "(?x) (?: (?= \\s )  (?:(?<=else|return) | (?<!\\w)) (\\s+))?(\\b(?!(while|for|foreach|repeat|if|else|return)\\s*\\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b )++  ) \\s*(\\()", 
-            "name": "meta.function-call.nasl"
-        }, 
-        "block_innards": {
+            },
+            "end": "(\\))\\s*",
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.parameters.end.python"
+                }
+
+            },
+            "name": "meta.function.python",
             "patterns": [
-                
                 {
-                    "include": "#function_call"
+                    "begin": "(?=[A-Za-z_][A-Za-z0-9_]*)",
+                    "contentName": "entity.name.function.python",
+                    "end": "(?![A-Za-z0-9_])",
+                    "patterns": [
+                        {
+                            "include": "#entity_name_function"
+                        }
+                    ]
                 },
                 {
-                    "include": "#block"
-                }, 
-                {
-                    "include": "$base"
+                    "begin": "(\\()",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.parameters.begin.python"
+                        }
+                    },
+                    "contentName": "meta.function.parameters.python",
+                    "end": "(?=\\)\\s*)",
+                    "patterns": [
+                        {
+                            "captures": {
+                                "1": {
+                                    "name": "variable.parameter.function.python"
+                                },
+                                "2": {
+                                    "name": "punctuation.separator.parameters.python"
+                                }
+                            },
+                            "match": "\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(?:(,)|(?=[\\n\\)]))"
+                        }
+                    ]
                 }
             ]
         },
 
 
+        "function_call": {
+            "captures": {
+                "1": {
+                    "name": "punctuation.whitespace.function-call.leading.nasl"
+                },
+                "2": {
+                    "name": "support.function.any-method.nasl"
+                },
+                "3": {
+                    "name": "punctuation.definition.parameters.nasl"
+                }
+            },
+            "match": "(?x) (?: (?= \\s )  (?:(?<=else|return) | (?<!\\w)) (\\s+))?(\\b(?!(while|for|foreach|repeat|if|else|return)\\s*\\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b )++  ) \\s*(\\()",
+            "name": "meta.function-call.nasl"
+        },
+        "block_innards": {
+            "patterns": [
 
+                {
+                    "include": "#function_call"
+                },
+                {
+                    "include": "#block"
+                },
+                {
+                    "include": "$base"
+                }
+            ]
+        },
 
         "entity_name_function": {
             "patterns": [
@@ -364,13 +422,6 @@
                 }
             ]
         }
-
-
-
-
-
-
-
 
     },
  "uuid": "39bb17ed-8cbc-4776-a720-a54e88da654d"
